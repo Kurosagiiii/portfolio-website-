@@ -2688,7 +2688,7 @@ body.ph-share-open .scrollbar-track {
 
 /* Caption size xxlg */
 #page-header.ph-cap-xxlg .ph-caption-title {
-	font-size: clamp(48px, 10vw, 180px);
+	font-size: clamp(48px, 10vw, 80px);
 }
 @media (min-width: 1025px) {
 	#page-header.ph-cap-xxlg.ph-stroke .ph-caption-title {
@@ -2697,7 +2697,7 @@ body.ph-share-open .scrollbar-track {
 }
 #page-header.ph-cap-xxlg .ph-caption-title-ghost {
 	padding-top: 5%;
-	font-size: calc(16px + 13vw);
+	font-size: calc(50px + 13vw);
 }
 
 /* Page header full screen */
