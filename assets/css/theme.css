@@ -9990,3 +9990,7 @@ body:not(.tt-boxed) .tt-footer-inner,
 		display: none;
 	}
 }
+
+.custom {
+	padding-left: 50px;
+}
