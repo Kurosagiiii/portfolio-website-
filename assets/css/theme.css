@@ -10015,50 +10015,69 @@ body:not(.tt-boxed) .tt-footer-inner,
   z-index: 2;
 }
 
-/* Brand scroller */
-.brand-scroller {
-  --gap: 6rem;           /* space between logos */
-  --speed: 32s;          /* adjust scrolling speed */
+/* ========== Brand Scroller (seamless) ========== */
+.brand-scroller{
+  --gap: 6rem;      /* space between logos */
+  --speed: 60s;     /* full cycle time (bigger = slower) */
   position: relative;
   overflow: hidden;
-  mask-image: linear-gradient( to right, rgba(0,0,0,0), #000 8%, #000 92%, rgba(0,0,0,0) );
-  -webkit-mask-image: linear-gradient( to right, rgba(0,0,0,0), #000 8%, #000 92%, rgba(0,0,0,0) );
+  /* soft fade edges (safe on webkit + others) */
+  -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0), #000 8%, #000 92%, rgba(0,0,0,0));
+          mask-image: linear-gradient(to right, rgba(0,0,0,0), #000 8%, #000 92%, rgba(0,0,0,0));
 }
 
-.brand-track {
+.brand-track{
   display: flex;
   align-items: center;
   gap: var(--gap);
-  width: max-content;             /* shrink-wrap content */
+  width: max-content;                   /* shrink-wrap all items */
+  flex-wrap: nowrap;
   animation: brand-marquee var(--speed) linear infinite;
   will-change: transform;
 }
 
-@keyframes brand-marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }  /* because we duplicated the set once */
+/* Pause on hover (optional—delete if you don’t want it) */
+.brand-scroller:hover .brand-track{
+  animation-play-state: paused;
 }
 
-/* Logo item */
-.brand img {
-  height: 90px;                   /* control logo height */
+/* Move exactly one set width (because we duplicated once) */
+@keyframes brand-marquee{
+  from{ transform: translate3d(0,0,0); }
+  to  { transform: translate3d(-50%,0,0); }
+}
+
+/* Items */
+.brand{ flex: 0 0 auto; }               /* prevent flex squeezing */
+.brand img{
+  height: 90px;                         /* control logo height */
   width: auto;
   display: block;
-  filter: grayscale(100%) opacity(0.7);	
+  margin: 0;                            /* no accidental gaps */
+  filter: grayscale(100%) opacity(.7);
   transition: filter .2s ease;
 }
+.brand:hover img{ filter: grayscale(0) opacity(1); }
 
-/* Hover state (nice on desktop, stays subtle) */
-.brand:hover img {
-  filter: grayscale(0%) opacity(1);
-}
-
-/* Dark/Light compatibility if your theme toggles */
-.dark .brand img { filter: invert(0) grayscale(100%) opacity(0.7); }
+/* Dark theme compatibility (tweak as needed) */
+.dark .brand img{ filter: invert(0) grayscale(100%) opacity(.7); }
 
 /* Respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .brand-track { animation: none; }
+@media (prefers-reduced-motion: reduce){
+  .brand-track{ animation: none; }
+}
+
+/* Responsive tweaks */
+@media (max-width: 1024px){
+  .brand-scroller{ --gap: 4rem; }
+}
+@media (max-width: 768px){
+  .brand-scroller{ --gap: 2.2rem; --speed: 24s; }
+  .brand img{ height: 72px; }
+}
+@media (max-width: 480px){
+  .brand-scroller{ --gap: 1.6rem; --speed: 20s; }
+  .brand img{ height: 60px; }
 }
 
 .custom-2 {
