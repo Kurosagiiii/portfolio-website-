@@ -10033,10 +10033,12 @@ body:not(.tt-boxed) .tt-footer-inner,
   display: flex;
   align-items: center;
   gap: var(--gap);
-  width: max-content;                   /* shrink-wrap all items */
+  width: max-content;         /* shrink-wrap all items */
   flex-wrap: nowrap;
   animation: brand-marquee var(--speed) linear infinite;
   will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
 }
 
 /* Always run the marquee (wins over Reduce Motion & template overrides) */
@@ -10048,7 +10050,7 @@ body:not(.tt-boxed) .tt-footer-inner,
 /* Move exactly one set width (because we duplicated once) */
 @keyframes brand-marquee{
   from { transform: translate3d(0,0,0); }
-  to   { transform: translate3d(-50%,0,0); } /* exactly half because set is duplicated once */
+  to   { transform: translate3d(calc(-50% - var(--gap)/2), 0, 0); }
 }
 
 /* Items */
